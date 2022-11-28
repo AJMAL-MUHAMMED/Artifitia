@@ -1,21 +1,23 @@
-const Todo = require('../models/todo')
+// const todo = require('../models/todo')
+import Todo from '../models/todo.js'
 
 
 //@disc Create todo
 //@api POST /api/todos
 //@access Public
-exports.createTodo =  async (req, res) => {
+export const createTodo =  async (req, res) => {
+    console.log(req.body)
     if(!req.body.Todo){
         return res.status(400).json({message: 'Please enter a todo.'})
     }
-    const data = await Todo.create({ todo: req.body.Todo })
+    const data = await todo.create({ todo: req.body.Todo })
     res.json({ data })
 }
 
 //@disc Get todos
 //@api GET /api/todos
 //@access Public
-exports.getTodos = async (req, res) => {
+export const getTodos = async (req, res) => {
     const data = await Todo.find()
     res.json({ data });
 }
@@ -23,7 +25,7 @@ exports.getTodos = async (req, res) => {
 //@disc Edit todo
 //@api PUT /api/todos/:id
 //@access Public
-exports.editTodo = async (req, res) => {
+export const editTodo = async (req, res) => {
     const todo = await Todo.findById(req.params.id)
     if (!todo) {
         return res.status(400).json({message: 'Invalid id.'})
@@ -35,7 +37,7 @@ exports.editTodo = async (req, res) => {
 //@disc Delete todo
 //@api DELETE /api/todos/:id
 //@access Public
-exports.deleteTodo =  async (req, res) => {
+export const deleteTodo =  async (req, res) => {
     const todo = await Todo.findById(req.params.id)
     if (!todo) {
         return res.status(400).json({message: 'Invalid id.'})
